@@ -15,6 +15,8 @@ class Сalculator{
     constructor(top,left){
         this.top=top;
         this.left=left;
+        this.createСalculator();
+        this.calculate();
         
     }
     createСalculator(){
@@ -140,32 +142,45 @@ class Сalculator{
           })
          })
           
-         this.equally.addEventListener('click',()=>{;  
+         this.equally.addEventListener('click',()=>{ 
          switch(this.op){
            case '+':
-             this.result.placeholder=+this.num1+(+this.str);;
+             this.result.placeholder=+this.num1+(+this.str);
+             this.reset();
              break;
              case '-':
-              this.result.placeholder=+this.num1-(+this.str);;
+              this.result.placeholder=+this.num1-(+this.str);
+              this.reset();
               break;
               case '/':
-                this.result.placeholder=+this.num1/(+this.str);;
+                this.result.placeholder=+this.num1/(+this.str);
+                this.reset();
                 break;
                 case 'x':
-                  this.result.placeholder=+this.num1*(+this.str);;
+                  this.result.placeholder=+this.num1*(+this.str);
+                  this.reset();
                   break;
+           
          }
        });
+
+       
        this.delete.addEventListener('click',()=>{
-        this.st='';
-        this.str='';
-        this.num='';
-        this.num1='';
-        this.op='';
+        this.reset();
         this.result.placeholder='0'
        })
 }
+        reset(){
+          this.st='';
+          this.str='';
+          this.num='';
+          this.num1='';
+          this.op='';
+        }
+    //  calculateWithOperation(num1,num2,op){
+    //    this.result.placeholder=Number(this.num1)op(+this.str);
+    // }
 }
 const calc=new Сalculator(200,200);
-calc.createСalculator();
-calc.calculate();
+//calc.createСalculator();
+//calc.calculate();
