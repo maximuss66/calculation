@@ -6,7 +6,7 @@ class Сalculator{
     delete;
 
     st='';
-    str='';
+    pointFlag=true;
     num='';
     num1='';
     op='';
@@ -48,8 +48,8 @@ class Сalculator{
             <button class='btn btn-operation'id="btnMul">/</button> 
  
               <button class='btn btn-number' >0</button>
-              <button class='btn btn-number'  >.</button>
-              <button class='btn '  id="btnEqually">=</button>  
+              <button class='btn' id='point' >.</button>
+              <button class='btn'  id="btnEqually">=</button>  
               <button class='btn btn-operation'  >x</button>    
          </div>
      </div>
@@ -115,6 +115,7 @@ class Сalculator{
      document.head.append(styleCalc);
      this.number=document.querySelectorAll('.btn-number');
      this.operation=document.querySelectorAll('.btn-operation');
+     this.point=document.getElementById('point');
       this.result=document.querySelector('.result');
       this.equally=document.getElementById('btnEqually');
       this.delete=document.getElementById('btnC');
@@ -123,21 +124,32 @@ class Сalculator{
     calculate() {
         this.number.forEach((el)=>{
         el.addEventListener('click',(e)=>{ 
-       this.num='';
-      this. num+=e.target.textContent;
-       this.st+=this.num;
-       this.str+=this.num;
+          this.st+=this.op;
+       this.st+=e.target.textContent;
+       this.num+=e.target.textContent;
        this.result.placeholder=this.st;
        })
        })
-       
+
+       this.point.addEventListener('click',()=>{
+        if(this.num&&this.pointFlag){
+        this.st+=this.point.textContent;
+        this.num+=this.point.textContent;
+        this.result.placeholder=this.st;
+        this.pointFlag=false;
+        }
+       })
+
        this.operation.forEach((el)=>{
           el.addEventListener('click',(e)=>{
-          if(this.op===''&&this.num!=''){
+            if(this.st!=''){
             this.op=e.target.textContent;
-            this.num1=this.str;
-            this.str='';
-          this.st=this.result.placeholder+=this.op;
+            if(this.num)
+            this.num1=this.num;
+            this.num='';
+            this.pointFlag=true;
+            this.result.placeholder='';
+           this.result.placeholder=this.st+this.op;
           }
           })
          })
@@ -145,19 +157,19 @@ class Сalculator{
          this.equally.addEventListener('click',()=>{ 
          switch(this.op){
            case '+':
-             this.result.placeholder=+this.num1+(+this.str);
+             this.result.placeholder=+this.num1+(+this.num);
              this.reset();
              break;
              case '-':
-              this.result.placeholder=+this.num1-(+this.str);
+              this.result.placeholder=+this.num1-(+this.num);
               this.reset();
               break;
               case '/':
-                this.result.placeholder=+this.num1/(+this.str);
+                this.result.placeholder=+this.num1/(+this.num);
                 this.reset();
                 break;
                 case 'x':
-                  this.result.placeholder=+this.num1*(+this.str);
+                  this.result.placeholder=+this.num1*(+this.num);
                   this.reset();
                   break;
            
@@ -172,10 +184,10 @@ class Сalculator{
 }
         reset(){
           this.st='';
-          this.str='';
           this.num='';
           this.num1='';
           this.op='';
+          this.pointFlag=true;
         }
     //  calculateWithOperation(num1,num2,op){
     //    this.result.placeholder=Number(this.num1)op(+this.str);
